@@ -63,8 +63,6 @@ const Form = () => {
     const data = {
       ...formData,
     };
-
-
     
     const config: AxiosRequestConfig = {
       method: 'POST',
