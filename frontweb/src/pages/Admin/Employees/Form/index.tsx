@@ -34,50 +34,28 @@ const Form = () => {
 
 
   useEffect(() => {
-    const params : AxiosRequestConfig = {
-      url: '/departments',
-      withCredentials: true,
-      params: {
-        page: 0,
-        size: 3,
-      },
-    };
+    
+      
  
-    requestBackend(params).then((response) => {
+    requestBackend({url: '/departments', withCredentials: true}).then((response) => {
       setSelectDepartment(response.data);
     });
   }, []);
 
-
-
-  useEffect(() => {
-    requestBackend({ url: `/employees/${employeeId}` }).then((response) => {
-      const employee = response.data as Employee;
-      setValue('name', employee.name);
-      setValue('email', employee.email);
-      setValue('department', employee.department);
-    });
-  }, [setValue]);
-
-  const onSubmit = (formData: Employee) => {
-    const data = {
-      ...formData,      
-      
-    };
-    
+  const onSubmit = (formData: Employee) => {    
     const config: AxiosRequestConfig = {
       method: 'POST',
       url: '/employees',
-      data,
+      data: formData,
       withCredentials: true,
     };
 
-    requestBackend(config).then((response) => {
-      toast.info('Funcionário cadastrado com sucesso.')
+    requestBackend(config).then(() => {
+      toast.info('Cadastrado com sucesso')
       history.push('/admin/employees');
     })
       .catch(() => {
-        toast.error('Erro ao cadastrar funcionário.')
+        toast.error('Erro ao cadastrar')
       });
   };
 
